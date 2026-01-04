@@ -18,6 +18,19 @@
     border-radius: 15px;
 }
 
+.inc {
+    display: none;
+}
+
+.settings.none {
+    display: none;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+}
+
 span {
     color: #284040;
     text-align: center;
@@ -28,10 +41,15 @@ span {
 .max {
     color: red
 }
+
 .btn-wrap {
     display: flex;
     width: 220px;
     justify-content: space-between;
+}
+
+.btn-wrap-hidden-expect-last button > *:not(:last-child) {
+    display: none;
 }
 
 button {
