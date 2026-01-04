@@ -1,4 +1,5 @@
-import {Button} from "./Button.tsx";
+import {ButtonsBox} from "./ButtonsBox.tsx";
+import {max} from "./App.tsx";
 
 type CounterType = {
     number: number;
@@ -11,29 +12,15 @@ export const Counter = ({
                             incNumber,
                             resNumber
                         }: CounterType) => {
-    const max = 5
-    const min = 0
-    const incNumberHandler = () => {
-        if (number < max) {
-            incNumber()
-        }
-    }
+
 
     return (
         <div className="counter">
             <span className={number === max ? "max" : ""}>{number}</span>
-            <div className={"btn-wrap"}>
-                <Button
-                    className={number === max ? "dis-btn" : ""}
-                    disabled={number === max}
-                    title={"inc"}
-                    onClick={incNumberHandler}/>
-                <Button
-                    className={number === min ? "dis-btn" : ""}
-                    disabled={number === min}
-                    title={"reset"}
-                    onClick={() => resNumber()}/>
-            </div>
+            <ButtonsBox
+                resNumber={resNumber}
+                incNumber={incNumber}
+                number={number}/>
         </div>
     );
 };
