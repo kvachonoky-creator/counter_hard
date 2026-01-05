@@ -1,28 +1,35 @@
 import './App.css'
-import {useState} from "react";
-import {Counter} from "./Counter.tsx";
+import { useState } from "react";
+import { Counter } from "./Counter.tsx";
 
-export let max = 5
-export let min = 0
 
 function App() {
 
-    const [number, setNumber] = useState<number>(0);
+    let minValue: number = 0
+
+    let [maxValue, setMaxValue] = useState<number>(5)
+    const [number, setNumber] = useState<number>(minValue);
     const [isSet, setIsSet] = useState<boolean>(false);
 
-
-    const incNumberHandler = () => number < 5 && setNumber(number + 1)
-    const resNumberHandler = () => setNumber(0)
+    const incNumberHandler = () => number < maxValue && setNumber(number + 1)
+    const resNumberHandler = () => setNumber(minValue)
     const changeSet = () => setIsSet(!isSet)
+    const updateMinValueSettings = (value: number) => setNumber(value)
+    const updateMaxValueSettings = (value: number) => setMaxValue(value)
+
 
     return (
         <div className="app">
             <Counter
                 number={number}
+                maxValue={maxValue}
+                minValue={minValue}
                 isSet={isSet}
                 incNumber={incNumberHandler}
                 resNumber={resNumberHandler}
-                changeSet = {changeSet}
+                changeSet={changeSet}
+                updateMinValueSettings={updateMinValueSettings}
+                updateMaxValueSettings={updateMaxValueSettings}
             />
         </div>
     )
