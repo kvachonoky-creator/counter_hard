@@ -1,5 +1,5 @@
-import { ButtonsBox } from "./ButtonsBox.tsx";
-import { Settings } from "./Settings.tsx";
+import { ButtonsBox } from "../buttonBox/ButtonsBox.tsx";
+import { Settings } from "../settings/Settings.tsx";
 
 type CounterType = {
     number: number

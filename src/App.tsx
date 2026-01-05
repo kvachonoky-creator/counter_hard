@@ -1,6 +1,6 @@
 import './App.css'
 import { useState } from "react";
-import { Counter } from "./Counter.tsx";
+import { Counter } from "./counter/Counter.tsx";
 
 
 function App() {

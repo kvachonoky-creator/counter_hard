@@ -1,4 +1,4 @@
-import { Button } from "./Button.tsx";
+import { Button } from "../button/Button.tsx";
 
 
 export type ButtonsBoxType = {
