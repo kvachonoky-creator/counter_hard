@@ -1,4 +1,5 @@
 import {ChangeEvent} from "react";
+import s from "./Settings.module.scss"
 
 type SettingsType = {
     maxValue: number
@@ -30,7 +31,7 @@ export const Settings = ({
 
     return (
         <div className={className}>
-            <label> max value:
+            <label className={s.label}> max value:
                 <input type="number"
                        onChange={onChangeMaxValueSettingsHandler}
                        min={minValueInput}

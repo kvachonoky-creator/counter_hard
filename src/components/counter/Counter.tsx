@@ -1,5 +1,6 @@
 import { ButtonsBox } from "../buttonBox/ButtonsBox.tsx";
 import { Settings } from "../settings/Settings.tsx";
+import s from "./Counter.module.scss"
 
 type CounterType = {
     number: number
@@ -26,16 +27,16 @@ export const Counter = ({
 }: CounterType) => {
 
     return (
-        <div className="counter">
+        <div className={s.counter}>
             <Settings
                 maxValue={maxValue}
                 minValue={minValue}
-                className={isSet ? "settings" : "settings none"}
+                className={isSet ? s.settings : `${s.settings} ${s.none}`}
                 updateMinValueSettings={updateMinValueSettings}
                 updateMaxValueSettings={updateMaxValueSettings}
             />
-            <div className={isSet ? "settings none" : ""}>
-                <span className={number === maxValue ? "max" : ""}>{number}</span>
+            <div className={isSet ? `${s.settings} ${s.none}` : ""}>
+                <span className={number === maxValue ? s.max : ""}>{number}</span>
             </div>
             <ButtonsBox
                 isSet={isSet}

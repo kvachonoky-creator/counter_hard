@@ -1,4 +1,5 @@
 import { Button } from "../button/Button.tsx";
+import s from "./ButtonsBox.module.scss"
 
 
 export type ButtonsBoxType = {
@@ -13,9 +14,9 @@ export type ButtonsBoxType = {
 
 export const ButtonsBox = ({
     number,
+    isSet,
     maxValue,
     minValue,
-    isSet,
     incNumber,
     resNumber,
     changeSet,
@@ -25,16 +26,18 @@ export const ButtonsBox = ({
     const resNumberHandler = () => resNumber()
     const setSettingsHandler = () => changeSet()
     return (
-        <div className={isSet ? "btn-wrap-hidden-expect-last" : "btn-wrap"}>
+        <div>
             <Button onClick={incNumberHandler}
                 title={"inc"}
-                className={number === maxValue ? "dis-btn" : ""}
+                className={number === maxValue ? s.disBtn : ""}
                 disabled={number === maxValue}
+                hidden={isSet}
             />
             <Button onClick={resNumberHandler}
-                className={number === minValue ? "dis-btn" : ""}
+                className={number === minValue ? s.disBtn : ""}
                 disabled={number === minValue}
                 title={"reset"}
+                hidden={isSet}
             />
             <Button onClick={setSettingsHandler} title={"set"}
             />

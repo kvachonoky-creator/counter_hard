@@ -3,20 +3,23 @@ export type ButtonType = {
     className?: string;
     title: string;
     disabled?: boolean;
+    hidden?: boolean
 }
 
 export const Button = ({
                            onClick,
                            className,
                            title,
-                           disabled
+                           disabled,
+                           hidden
                        }: ButtonType) => {
     return (
         <button
             onClick={() => onClick()}
             className={className}
             title={title}
-            disabled={disabled}>
+            disabled={disabled}
+            hidden={hidden}>
             {title}
         </button>
     );

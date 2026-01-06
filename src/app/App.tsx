@@ -1,6 +1,6 @@
-import './App.css'
 import { useState } from "react";
-import { Counter } from "./counter/Counter.tsx";
+import { Counter } from "../components/counter/Counter.tsx";
+import s from "./App.module.scss"
 
 
 function App() {
@@ -11,7 +11,13 @@ function App() {
     const [number, setNumber] = useState<number>(minValue);
     const [isSet, setIsSet] = useState<boolean>(false);
 
-    const incNumberHandler = () => number < maxValue && setNumber(number + 1)
+    const incNumberHandler = () => {
+        if (number < maxValue) {
+            setNumber(number + 1)
+            localStorage.setItem("counterNumber", JSON.stringify(number))
+        }
+
+    }
     const resNumberHandler = () => setNumber(minValue)
     const changeSet = () => setIsSet(!isSet)
     const updateMinValueSettings = (value: number) => setNumber(value)
@@ -19,7 +25,7 @@ function App() {
 
 
     return (
-        <div className="app">
+        <div className={s.app}>
             <Counter
                 number={number}
                 maxValue={maxValue}
