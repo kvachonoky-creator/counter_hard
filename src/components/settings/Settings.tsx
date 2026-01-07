@@ -1,4 +1,4 @@
-import {ChangeEvent} from "react";
+import {ChangeEvent, useState} from "react";
 import s from "./Settings.module.scss"
 
 type SettingsType = {
@@ -10,8 +10,6 @@ type SettingsType = {
 }
 
 export const Settings = ({
-                             // maxValue,
-                             // minValue,
                              className,
                              updateMinValueSettings,
                              updateMaxValueSettings
@@ -20,29 +18,41 @@ export const Settings = ({
     const minValueInput = 0
     const maxValueInput = 5
 
+    const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxValueInput)
+    const [currentStartValue, setCurrentStartValue] = useState<number>(0)
+
+
     const onChangeMinValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
         updateMinValueSettings(+e.currentTarget.value)
+        setCurrentStartValue(+e.currentTarget.value)
     }
 
     const onChangeMaxValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
         updateMaxValueSettings(+e.currentTarget.value)
+        setCurrentMaxValue(+e.currentTarget.value)
     }
 
 
     return (
         <div className={className}>
             <label className={s.label}> max value:
-                <input type="number"
-                       onChange={onChangeMaxValueSettingsHandler}
-                       min={minValueInput}
-                       max={maxValueInput}
+                <input
+                    className={currentStartValue >= currentMaxValue ? s.warningInput : ""}
+                    type="number"
+                    value={currentMaxValue}
+                    onChange={onChangeMaxValueSettingsHandler}
+                    min={minValueInput}
+                    max={maxValueInput}
                 />
             </label>
-            <label> min value:
-                <input type="number"
-                       onChange={onChangeMinValueSettingsHandler}
-                       min={minValueInput}
-                       max={maxValueInput}
+            <label> start value:
+                <input
+                    className={currentStartValue >= currentMaxValue ? s.warningInput : ""}
+                    type="number"
+                    value={currentStartValue}
+                    onChange={onChangeMinValueSettingsHandler}
+                    min={minValueInput}
+                    max={maxValueInput}
                 />
             </label>
         </div>
