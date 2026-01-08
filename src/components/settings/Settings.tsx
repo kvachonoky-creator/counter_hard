@@ -1,25 +1,43 @@
-import {ChangeEvent, useState} from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import s from "./Settings.module.scss"
 
 type SettingsType = {
     maxValue: number
-    minValue: number
     className?: string
     updateMinValueSettings: (value: number) => void
     updateMaxValueSettings: (value: number) => void
+    changeIsSettingsCorrectValue: (value: boolean) => void
 }
 
 export const Settings = ({
-                             className,
-                             updateMinValueSettings,
-                             updateMaxValueSettings
-                         }: SettingsType) => {
+    className,
+    updateMinValueSettings,
+    updateMaxValueSettings,
+    changeIsSettingsCorrectValue
+}: SettingsType) => {
 
     const minValueInput = 0
     const maxValueInput = 5
 
     const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxValueInput)
-    const [currentStartValue, setCurrentStartValue] = useState<number>(0)
+    const [currentStartValue, setCurrentStartValue] = useState<number>(minValueInput)
+
+    
+    useEffect(() => {
+        let localStorageMaxValue = localStorage.getItem("maxValueInput")
+        localStorageMaxValue && setCurrentMaxValue(JSON.parse(localStorageMaxValue))
+    }, [])
+    useEffect(() => {
+        let localStorageStartValue = localStorage.getItem("minValueInput")
+        localStorageStartValue && setCurrentStartValue(JSON.parse(localStorageStartValue))
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("maxValueInput", JSON.stringify(currentMaxValue))
+    }, [currentMaxValue])
+    useEffect(() => {
+        localStorage.setItem("minValueInput", JSON.stringify(currentStartValue))
+    }, [currentStartValue])
 
 
     const onChangeMinValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +49,8 @@ export const Settings = ({
         updateMaxValueSettings(+e.currentTarget.value)
         setCurrentMaxValue(+e.currentTarget.value)
     }
+
+    changeIsSettingsCorrectValue(currentStartValue >= currentMaxValue)
 
 
     return (

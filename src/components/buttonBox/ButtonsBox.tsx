@@ -5,8 +5,9 @@ import s from "./ButtonsBox.module.scss"
 export type ButtonsBoxType = {
     number: number
     maxValue: number
-    minValue: number
+    startValue: number
     isSet: boolean
+    isSettingsCorrectValue: boolean
     incNumber: () => void
     resNumber: () => void
     changeSet: () => void
@@ -15,8 +16,9 @@ export type ButtonsBoxType = {
 export const ButtonsBox = ({
     number,
     isSet,
+    isSettingsCorrectValue,
     maxValue,
-    minValue,
+    startValue,
     incNumber,
     resNumber,
     changeSet,
@@ -27,19 +29,25 @@ export const ButtonsBox = ({
     const setSettingsHandler = () => changeSet()
     return (
         <div>
-            <Button onClick={incNumberHandler}
+            <Button
+                onClick={incNumberHandler}
                 title={"inc"}
                 className={number === maxValue ? s.disBtn : ""}
                 disabled={number === maxValue}
                 hidden={isSet}
             />
-            <Button onClick={resNumberHandler}
-                className={number === minValue ? s.disBtn : ""}
-                disabled={number === minValue}
+            <Button
+                onClick={resNumberHandler}
+                className={number === startValue ? s.disBtn : ""}
+                disabled={number === startValue}
                 title={"reset"}
                 hidden={isSet}
             />
-            <Button onClick={setSettingsHandler} title={"set"}
+            <Button
+                onClick={setSettingsHandler}
+                className={isSettingsCorrectValue ? s.disBtn : ""}
+                title={"set"}
+                disabled={isSettingsCorrectValue}
             />
         </div>
     );

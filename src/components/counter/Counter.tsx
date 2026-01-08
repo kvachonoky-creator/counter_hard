@@ -5,44 +5,49 @@ import s from "./Counter.module.scss"
 type CounterType = {
     number: number
     maxValue: number
-    minValue: number
+    startValue: number
     isSet: boolean
+    isSettingsCorrectValue: boolean
     incNumber: () => void
     resNumber: () => void
     changeSet: () => void
     updateMinValueSettings: (value: number) => void
     updateMaxValueSettings: (value: number) => void
+    changeIsSettingsCorrectValue: (value: boolean) => void
 }
 
 export const Counter = ({
     number,
     maxValue,
-    minValue,
+    startValue,
     isSet,
+    isSettingsCorrectValue,
     incNumber,
     resNumber,
     changeSet,
     updateMinValueSettings,
-    updateMaxValueSettings
+    updateMaxValueSettings,
+    changeIsSettingsCorrectValue
 }: CounterType) => {
 
     return (
         <div className={s.counter}>
             <Settings
                 maxValue={maxValue}
-                minValue={minValue}
                 className={isSet ? s.settings : `${s.settings} ${s.none}`}
                 updateMinValueSettings={updateMinValueSettings}
                 updateMaxValueSettings={updateMaxValueSettings}
+                changeIsSettingsCorrectValue={changeIsSettingsCorrectValue}
             />
             <div className={isSet ? `${s.settings} ${s.none}` : ""}>
                 <span className={number === maxValue ? s.max : ""}>{number}</span>
             </div>
             <ButtonsBox
                 isSet={isSet}
+                isSettingsCorrectValue={isSettingsCorrectValue}
                 number={number}
                 maxValue={maxValue}
-                minValue={minValue}
+                startValue={startValue}
                 resNumber={resNumber}
                 incNumber={incNumber}
                 changeSet={changeSet}
