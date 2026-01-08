@@ -28,7 +28,11 @@ function App() {
     const resNumberHandler = () => setNumber(startValue)
     const changeSet = () => setIsSet(!isSet)
     const changeStartValue = (value: number) => setStartValue(value)
-    const changeMaxInitValue = (value: number) => setMaxValue(value)
+    const changeMaxInitValue = (value: number) => {
+        setMaxInitValue(value);
+        console.log(value);
+        console.log(maxInitValue)
+    }
     const updateMinValueSettings = (value: number) => setNumber(value)
     const updateMaxValueSettings = (value: number) => setMaxValue(value)
     const changeIsSettingsCorrectValue = (value: boolean) => setisSettingsCorrectValue(value)

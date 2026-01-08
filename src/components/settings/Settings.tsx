@@ -27,25 +27,37 @@ export const Settings = ({
     const minValueInput = 0
     const maxValueInput = 5
 
-    const [currentMaxValue, setCurrentMaxValue] = useState<number>(startValue)
-    const [currentStartValue, setCurrentStartValue] = useState<number>(maxInitValue)
+    const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxInitValue)
+    const [currentStartValue, setCurrentStartValue] = useState<number>(startValue)
 
 
     useEffect(() => {
-        let localStorageMaxValue = localStorage.getItem("maxValueInput")
+        let localStorageStartValue = localStorage.getItem("StartValueSettings")
+        localStorageStartValue && setCurrentStartValue(JSON.parse(localStorageStartValue))
+
+
+        let localStorageMaxValue = localStorage.getItem("MaxValueSettings")
         localStorageMaxValue && setCurrentMaxValue(JSON.parse(localStorageMaxValue))
     }, [])
-    useEffect(() => {
-        let localStorageStartValue = localStorage.getItem("minValueInput")
-        localStorageStartValue && setCurrentStartValue(JSON.parse(localStorageStartValue))
-    }, [])
+
+
 
     useEffect(() => {
-        localStorage.setItem("maxValueInput", JSON.stringify(currentMaxValue))
+        localStorage.setItem("MaxValueSettings", JSON.stringify(currentMaxValue))
     }, [currentMaxValue])
+
+
     useEffect(() => {
-        localStorage.setItem("minValueInput", JSON.stringify(currentStartValue))
+        localStorage.setItem("StartValueSettings", JSON.stringify(currentStartValue))
     }, [currentStartValue])
+
+
+    changeStartValue(currentStartValue)
+    changeMaxInitValue(currentMaxValue)
+
+console.log(currentMaxValue);
+
+
 
 
     const onChangeMinValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,8 +72,6 @@ export const Settings = ({
 
     changeIsSettingsCorrectValue(currentStartValue >= currentMaxValue)
 
-    changeStartValue(currentStartValue)
-    changeMaxInitValue(currentMaxValue)
 
     return (
         <div className={className}>
