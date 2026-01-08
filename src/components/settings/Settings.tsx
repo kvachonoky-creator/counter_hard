@@ -3,7 +3,11 @@ import s from "./Settings.module.scss"
 
 type SettingsType = {
     maxValue: number
+    startValue: number
+    maxInitValue: number
     className?: string
+    changeStartValue: (value: number) => void
+    changeMaxInitValue: (value: number) => void
     updateMinValueSettings: (value: number) => void
     updateMaxValueSettings: (value: number) => void
     changeIsSettingsCorrectValue: (value: boolean) => void
@@ -11,6 +15,10 @@ type SettingsType = {
 
 export const Settings = ({
     className,
+    startValue,
+    maxInitValue,
+    changeStartValue,
+    changeMaxInitValue,
     updateMinValueSettings,
     updateMaxValueSettings,
     changeIsSettingsCorrectValue
@@ -19,10 +27,10 @@ export const Settings = ({
     const minValueInput = 0
     const maxValueInput = 5
 
-    const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxValueInput)
-    const [currentStartValue, setCurrentStartValue] = useState<number>(minValueInput)
+    const [currentMaxValue, setCurrentMaxValue] = useState<number>(startValue)
+    const [currentStartValue, setCurrentStartValue] = useState<number>(maxInitValue)
 
-    
+
     useEffect(() => {
         let localStorageMaxValue = localStorage.getItem("maxValueInput")
         localStorageMaxValue && setCurrentMaxValue(JSON.parse(localStorageMaxValue))
@@ -52,6 +60,8 @@ export const Settings = ({
 
     changeIsSettingsCorrectValue(currentStartValue >= currentMaxValue)
 
+    changeStartValue(currentStartValue)
+    changeMaxInitValue(currentMaxValue)
 
     return (
         <div className={className}>
