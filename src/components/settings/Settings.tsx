@@ -1,33 +1,28 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import s from "./Settings.module.scss"
 
 type SettingsType = {
     maxValue: number
     startValue: number
-    maxInitValue: number
     className?: string
     changeStartValue: (value: number) => void
-    changeMaxInitValue: (value: number) => void
     updateMinValueSettings: (value: number) => void
     updateMaxValueSettings: (value: number) => void
     changeIsSettingsCorrectValue: (value: boolean) => void
 }
 
 export const Settings = ({
-    className,
-    startValue,
-    maxInitValue,
-    changeStartValue,
-    changeMaxInitValue,
-    updateMinValueSettings,
-    updateMaxValueSettings,
-    changeIsSettingsCorrectValue
-}: SettingsType) => {
+                             className,
+                             startValue,
+                             maxValue,
+                             changeStartValue,
+                             updateMinValueSettings,
+                             updateMaxValueSettings,
+                             changeIsSettingsCorrectValue
+                         }: SettingsType) => {
 
-    const minValueInput = 0
-    const maxValueInput = 5
 
-    const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxInitValue)
+    const [currentMaxValue, setCurrentMaxValue] = useState<number>(maxValue)
     const [currentStartValue, setCurrentStartValue] = useState<number>(startValue)
 
 
@@ -41,7 +36,6 @@ export const Settings = ({
     }, [])
 
 
-
     useEffect(() => {
         localStorage.setItem("MaxValueSettings", JSON.stringify(currentMaxValue))
     }, [currentMaxValue])
@@ -51,13 +45,10 @@ export const Settings = ({
         localStorage.setItem("StartValueSettings", JSON.stringify(currentStartValue))
     }, [currentStartValue])
 
-
-    changeStartValue(currentStartValue)
-    changeMaxInitValue(currentMaxValue)
-
-console.log(currentMaxValue);
-
-
+    useEffect(() => {
+        changeStartValue(currentStartValue)
+        changeIsSettingsCorrectValue(currentStartValue >= currentMaxValue)
+    }, [currentMaxValue, currentStartValue, changeIsSettingsCorrectValue]);
 
 
     const onChangeMinValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,8 +61,6 @@ console.log(currentMaxValue);
         setCurrentMaxValue(+e.currentTarget.value)
     }
 
-    changeIsSettingsCorrectValue(currentStartValue >= currentMaxValue)
-
 
     return (
         <div className={className}>
@@ -81,8 +70,6 @@ console.log(currentMaxValue);
                     type="number"
                     value={currentMaxValue}
                     onChange={onChangeMaxValueSettingsHandler}
-                    min={minValueInput}
-                    max={maxValueInput}
                 />
             </label>
             <label> start value:
@@ -91,8 +78,6 @@ console.log(currentMaxValue);
                     type="number"
                     value={currentStartValue}
                     onChange={onChangeMinValueSettingsHandler}
-                    min={minValueInput}
-                    max={maxValueInput}
                 />
             </label>
         </div>
