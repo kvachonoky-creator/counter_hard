@@ -11,7 +11,6 @@ type CounterType = {
     incNumber: () => void
     resNumber: () => void
     changeSet: () => void
-    changeStartValue: (value: number) => void
     updateMinValueSettings: (value: number) => void
     updateMaxValueSettings: (value: number) => void
     changeIsSettingsCorrectValue: (value: boolean) => void
@@ -26,11 +25,11 @@ export const Counter = ({
     incNumber,
     resNumber,
     changeSet,
-    changeStartValue,
     updateMinValueSettings,
     updateMaxValueSettings,
     changeIsSettingsCorrectValue
 }: CounterType) => {
+
 
     return (
         <div className={s.counter}>
@@ -41,7 +40,6 @@ export const Counter = ({
                 updateMinValueSettings={updateMinValueSettings}
                 updateMaxValueSettings={updateMaxValueSettings}
                 changeIsSettingsCorrectValue={changeIsSettingsCorrectValue}
-                changeStartValue={changeStartValue}
             />
             <div className={isSet ? `${s.settings} ${s.none}` : ""}>
                 <span className={number === maxValue ? s.max : ""}>{number}</span>
