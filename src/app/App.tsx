@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { Counter } from "../components/counter/Counter.tsx";
 import s from "./App.module.scss"
+import { Settings } from "../components/settings/Settings.tsx";
 
 
 function App() {
 
     const [startValue, setStartValue] = useState<number>(0)
     const [maxValue, setMaxValue] = useState<number>(5)
-    const [number, setNumber] = useState<number>(startValue);
+    const [value, setValue] = useState<number>(startValue);
     const [isSet, setIsSet] = useState<boolean>(false);
     const [isSettingsCorrectValue, setIsSettingsCorrectValue] = useState<boolean>(false);
 
     useEffect(() => {
-        let localStorageNumbertValue = localStorage.getItem("counterNumber");
+        let localStorageNumbertValue = localStorage.getItem("Value");
         if (localStorageNumbertValue) {
-            setNumber(JSON.parse(localStorageNumbertValue));
+            setValue(JSON.parse(localStorageNumbertValue));
         }
-
 
         let localStorageStartValue = localStorage.getItem("StartValueSettings")
         if (localStorageStartValue) {
@@ -32,39 +32,39 @@ function App() {
         [])
 
     useEffect(() => {
-        localStorage.setItem("counterNumber", JSON.stringify(number));
-    }, [number])
-
-    useEffect(() => {
         localStorage.setItem("StartValueSettings", JSON.stringify(startValue));
-    }, [startValue])
+        localStorage.setItem("Value", JSON.stringify(value));
+        localStorage.setItem("MaxValueSettings", JSON.stringify(maxValue))
+    }, [startValue, value, maxValue])
 
-
-    useEffect(() => {
-        localStorage.setItem("MaxValueSettings", JSON.stringify(maxValue));
-    }, [maxValue])
-
-
-    const incNumberHandler = () => number < maxValue && setNumber(number + 1)
-
-    const resNumberHandler = () => setNumber(startValue)
-    const changeSet = () => setIsSet(!isSet)
-
-    const updateMinValueSettings = (value: number) => {setNumber(value); setStartValue(value)}
+    const incNumberHandler = () => value < maxValue && setValue(value + 1)
+    const resNumberHandler = () => setValue(startValue)
+    const updateMinValueSettings = (value: number) => { setValue(value); setStartValue(value) }
     const updateMaxValueSettings = (value: number) => setMaxValue(value)
+    const changeIsSet = (value: boolean) => setIsSet(value)
     const changeIsSettingsCorrectValue = (value: boolean) => setIsSettingsCorrectValue(value)
 
     return (
         <div className={s.app}>
+
+            <Settings
+                startValue={startValue}
+                maxValue={maxValue}
+                isSet={isSet}
+                updateMinValueSettings={updateMinValueSettings}
+                updateMaxValueSettings={updateMaxValueSettings}
+                changeIsSet={changeIsSet}
+                changeIsSettingsCorrectValue={changeIsSettingsCorrectValue}
+            />
+
             <Counter
-                number={number}
+                value={value}
                 maxValue={maxValue}
                 startValue={startValue}
                 isSet={isSet}
                 isSettingsCorrectValue={isSettingsCorrectValue}
                 incNumber={incNumberHandler}
                 resNumber={resNumberHandler}
-                changeSet={changeSet}
                 updateMinValueSettings={updateMinValueSettings}
                 updateMaxValueSettings={updateMaxValueSettings}
                 changeIsSettingsCorrectValue={changeIsSettingsCorrectValue}

@@ -25,23 +25,19 @@
     justify-content: space-around;
 }
 
-span {
+
+.text {
     color: aqua;
-    text-align: center;
-    font-size: 56px;
+    font-size: 25px;
     font-weight: bold;
+    width: 100%;
 }
 
 .max {
+    font-size: 75px;
+}
+
+.max,
+.inCorrect {
     color: red;
-}
-
-.settings.none {
-    display: none;
-}
-
-.settings {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
 }
