@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./button/Button.tsx";
 import s from "./ButtonsBox.module.scss"
 
@@ -21,6 +22,11 @@ export const ButtonsBox = ({
     resNumber,
 }: ButtonsBoxType) => {
 
+    const classIncButton = value === maxValue || isSet ? s.disBtn : ""
+    const disabledIncButton = value === maxValue || isSet
+    const classResButton = value === startValue || isSet ? s.disBtn : ""
+    const disabledResButton = value === startValue || isSet
+
     const incNumberHandler = () => incNumber()
     const resNumberHandler = () => resNumber()
     return (
@@ -28,13 +34,13 @@ export const ButtonsBox = ({
             <Button
                 onClick={incNumberHandler}
                 title={"inc"}
-                className={value === maxValue || isSet ? s.disBtn : ""}
-                disabled={value === maxValue || isSet}
+                className={classIncButton}
+                disabled={disabledIncButton}
             />
             <Button
                 onClick={resNumberHandler}
-                className={value === startValue || isSet ? s.disBtn : ""}
-                disabled={value === startValue || isSet}
+                className={classResButton}
+                disabled={disabledResButton}
                 title={"reset"}
             />
         </div>

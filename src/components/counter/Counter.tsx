@@ -1,3 +1,4 @@
+import React from "react";
 import { ButtonsBox } from "../buttonBox/ButtonsBox.tsx";
 import s from "./Counter.module.scss"
 
@@ -24,16 +25,18 @@ export const Counter = ({
     resNumber,
 }: CounterType) => {
 
+    const classValue = value === maxValue ? s.max : ""
+    const classMessageSettings = isSettingsCorrectValue ? `${s.text} ${s.inCorrect}` : s.text
 
     return (
         <div className={s.counter}>
             <div> {isSet
                 ? <span
-                    className={isSettingsCorrectValue ? `${s.text} ${s.inCorrect}` : s.text}>
+                    className={classMessageSettings}>
                     {isSettingsCorrectValue ? `Incorrect value!` : `enter values and press 'set'`}
                 </span>
                 : <span
-                    className={value === maxValue ? s.max : ""}>
+                    className={classValue}>
                     {value}
                 </span>
             }

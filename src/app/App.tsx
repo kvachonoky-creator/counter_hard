@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { Counter } from "../components/counter/Counter.tsx";
 import s from "./App.module.scss"
 import { Settings } from "../components/settings/Settings.tsx";
+import React from "react";
 
 
 function App() {
-
-    const [startValue, setStartValue] = useState<number>(0)
-    const [maxValue, setMaxValue] = useState<number>(5)
+    const INITIAL_START_VALUE = 0
+    const INITIAL_MAX_VAUE = 5
+    
+    const [startValue, setStartValue] = useState<number>(INITIAL_START_VALUE)
+    const [maxValue, setMaxValue] = useState<number>(INITIAL_MAX_VAUE)
     const [value, setValue] = useState<number>(startValue);
     const [isSet, setIsSet] = useState<boolean>(false);
     const [isSettingsCorrectValue, setIsSettingsCorrectValue] = useState<boolean>(false);

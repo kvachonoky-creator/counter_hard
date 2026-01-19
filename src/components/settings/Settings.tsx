@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import s from "./Settings.module.scss"
 import { Button } from "../buttonBox/button/Button";
+import React from "react";
 
 type SettingsType = {
     maxValue: number
@@ -26,6 +27,10 @@ export const Settings = ({
     const [currentStartValue, setCurrentStartValue] = useState<number>(startValue)
 
     const isCorrect = currentStartValue >= 0 && currentMaxValue > currentStartValue && currentMaxValue >= 1
+    const classCurrentStartValue = currentStartValue >= currentMaxValue || currentStartValue < 0 ? s.warningInput : ""
+    const classCurrentMaxValue = currentStartValue >= currentMaxValue ? s.warningInput : ""
+    const classSetButton = (isSet && !isCorrect) || !isSet ? s.disBtn : ""
+    const disabledSetButton = (isSet && !isCorrect) || !isSet
 
     useEffect(() => {
         changeIsSettingsCorrectValue(!isCorrect)
@@ -37,29 +42,28 @@ export const Settings = ({
     }, [maxValue, startValue])
 
     const onChangeMinValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (+e.currentTarget.value >= 0) {
-            updateMinValueSettings(+e.currentTarget.value)
-        }
         setCurrentStartValue(+e.currentTarget.value)
         changeIsSet(true)
     }
 
     const onChangeMaxValueSettingsHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (+e.currentTarget.value >= 1) {
-            updateMaxValueSettings(+e.currentTarget.value)
-        }
         setCurrentMaxValue(+e.currentTarget.value)
         changeIsSet(true)
     }
 
-    const onClickHandler = () => changeIsSet(false)
+    const onClickHandler = () => {
+            updateMinValueSettings(currentStartValue)
+            updateMaxValueSettings(currentMaxValue)
+            changeIsSet(false)
+        
+    }
 
     return (
         <div className={s.settings}>
             <div>
                 <label className={s.label}> max value:
                     <input
-                        className={currentStartValue >= currentMaxValue ? s.warningInput : ""}
+                        className={classCurrentMaxValue}
                         type="number"
                         value={currentMaxValue}
                         onChange={onChangeMaxValueSettingsHandler}
@@ -67,7 +71,7 @@ export const Settings = ({
                 </label>
                 <label> start value:
                     <input
-                        className={currentStartValue >= currentMaxValue || currentStartValue < 0 ? s.warningInput : ""}
+                        className={classCurrentStartValue}
                         type="number"
                         value={currentStartValue}
                         onChange={onChangeMinValueSettingsHandler}
@@ -77,9 +81,9 @@ export const Settings = ({
             <div>
                 <Button
                     onClick={onClickHandler}
-                    className={(isSet && !isCorrect) || !isSet ? s.disBtn : ""}
+                    className={classSetButton}
                     title={"set"}
-                    disabled={(isSet && !isCorrect) || !isSet}
+                    disabled={disabledSetButton}
                 />
             </div>
 
